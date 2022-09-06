@@ -12,12 +12,13 @@ from flask import abort
 from sqlalchemy import Table
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
 
 Base = declarative_base()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.getenv("APP_SECRET_KEY")
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -96,7 +97,6 @@ gravatar = Gravatar(app,size=100, rating='g', default='retro', force_default=Fal
 def get_all_posts():
     posts = BlogPost.query.all()
     print(posts)
-    print(current_user.comments)
     return render_template("index.html", all_posts=posts)
 
 
